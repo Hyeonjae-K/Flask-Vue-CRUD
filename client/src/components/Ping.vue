@@ -5,15 +5,12 @@
 </template>
 
 <script>
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/ping',
-      name: 'Ping',
-      component: Ping,
-    },
-  ],
-});
+export default {
+  name: 'Ping',
+  data() {
+    return {
+      msg: 'Hello!',
+    };
+  },
+};
 </script>
