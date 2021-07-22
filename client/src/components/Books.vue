@@ -2,14 +2,25 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-10">
+        <!-- 제목 -->
         <h1>Books</h1>
+        <!-- 구분선 + 줄바꿈*2 -->
         <hr><br><br>
+        <!-- 만약 showMessage != fales일 경우 message 출력 -->
+        <!-- 동적으로 메시지 출력 가능 -->
         <alert :message=message v-if="showMessage"></alert>
+        <!-- 책 추가를 위한 버튼 생성 -->
+        <!-- 클릭시 book-modal 표시 -->
+        <!-- modal: 다른 화면을 띄워 표현하는 방식(팝업) -->
         <button type="button" class="btn btn-success btn-sm" v-b-modal.book-modal>Add Book</button>
+        <!-- 줄바꿈*2 -->
         <br><br>
+        <!-- 테이블 생성 -->
         <table class="table table-hover">
           <thead>
+            <!-- 1열 -->
             <tr>
+              <!-- 4행 -->
               <th scope="col">Title</th>
               <th scope="col">Author</th>
               <th scope="col">Read?</th>
@@ -17,15 +28,21 @@
             </tr>
           </thead>
           <tbody>
+            <!-- 반복문을 통해 각 열 출력 -->
             <tr v-for="(book, index) in books" :key="index">
+              <!-- 책 제목 출력 -->
               <td>{{ book.title }}</td>
+              <!-- 책 저자 출력 -->
               <td>{{ book.author }}</td>
               <td>
+                <!-- True일 경우 Yes, False일 경우 No -->
                 <span v-if="book.read">Yes</span>
                 <span v-else>No</span>
               </td>
+              <!-- 수정, 삭제 버튼 -->
               <td>
                 <div class="btn-group" role="group">
+                  <!-- 클릭시 book-update-modal 표시 및 'editBook(book)' 메소드 실행 -->
                   <button
                           type="button"
                           class="btn btn-warning btn-sm"
@@ -33,6 +50,7 @@
                           @click="editBook(book)">
                       Update
                   </button>
+                  <!-- 클릭시 'onDeleteBook(book)' 메소드 실행 -->
                   <button
                           type="button"
                           class="btn btn-danger btn-sm"
@@ -47,6 +65,7 @@
       </div>
     </div>
 
+    <!-- book-modal -->
     <b-modal ref="addBookModal"
             id="book-modal"
             title="Add a new book"
@@ -83,7 +102,7 @@
         </b-button-group>
       </b-form>
     </b-modal>
-
+    <!-- book-update-modal -->
     <b-modal ref="editBookModal"
             id="book-update-modal"
             title="Update"
@@ -143,9 +162,14 @@ export default {
         author: '',
         read: [],
       },
+      // 출력할 메시지를 저장할 변수
       message: '',
+      // 메시지를 출력할지 결정하는 변수
       showMessage: false,
     };
+  },
+  created() {
+    this.getBooks();
   },
   components: {
     alert: Alert,
@@ -255,9 +279,6 @@ export default {
     onDeleteBook(book) {
       this.removeBook(book.id);
     },
-  },
-  created() {
-    this.getBooks();
   },
 };
 </script>
